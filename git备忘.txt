@@ -1,0 +1,129 @@
+ssh create:
+ssh-keygen -t rsa -C "username"
+
+
+1.git clone server@10.0.203.20:/data/mobaserver.git(服务器)
+1.git clone client@10.0.203.20:/data/mobaclient.git(客户端)
+2.git branch --set-upstream-to=origin/master master
+
+3.git pull
+
+3.1 二进制文件冲突解决
+  如果二进制文件发生冲突,不方便查看git插入的冲突标记, 解决比较棘手,通常最简单的解决方法是提前沟通好,相同修改的地方二选一. 
+  git checkout FILE --ours [ --theirs ]
+
+(查看分支 git branch)(查看远程分支git branch -a)
+4.切换分支 git checkout develop
+
+5.创建分支 git checkout -b feature/"新分支名称"
+新分支上传(第一次上传) git push origin feature/"分支名称":feature/"分支名称" (前后有一个是本地的有一个是远程的)
+
+6.查看本地修改信息 git status
+
+7.添加 git add "文件名或者目录"
+
+8.撤销add 
+git reset HEAD "文件名或者目录"
+
+9.提交所有 git commit -a -m "注释信息"
+
+10.提交修改 git commit -m "注释信息"
+
+11.Push git push 
+
+12.合并分支
+git checkout develop
+git merge --no-commit "分支名称"
+
+13.删除
+*删除本地分支：
+git branch -D BranchName
+
+*删除本地的远程分支：
+git branch -r -D origin/BranchName
+
+*远程删除git服务器上的分支：git push -d origin branch-name
+                                            git push origin :branch-name
+
+*删除远程分支后，branch -a还是能看到的解决方法
+git remote prune origin 
+再执行 
+git branch -a 
+就可以看到已经看不见已经删除的分支了
+
+14.查找被删除文件
+查找影响给定路径的最后一次提交。由于文件不在头提交中，此提交肯定已删除它。
+
+git rev-list -n 1 HEAD -- <file_path>
+然后使用插入符(^)文号：
+
+git checkout <deleting_commit>^ -- <file_path>
+或者在一个命令中，如果$file是有问题的文件。
+
+git checkout $(git rev-list -n 1 HEAD -- "$file")^ -- "$file"
+
+
+
+额外记录：
+git reset --hard  产生冲突想回滚时候可以用
+git log --pretty=oneline 文件名  查看某文件的修改记录
+git reset --soft HEAD~1    commit后想回退一个提交版本
+
+如果A文件已经在Add之后的列表里等待commit，想要撤销Add操作：
+git reset HEAD A
+在执行这个命令前，A是不能被重新Checkout出来的，故想获取仓库中的A，先执行上面命令，再：
+git checkout A
+
+提交了一次错误的提交并push了
+1 软/硬重置，重置到之前正确的提交
+git reset --hard / --soft HEAD~n
+2 git push origin 本地分支名 force 强行提交上去即可
+
+1.比较两次commit提交之后的差异：
+git diff hash1 hash2 --stat
+能够查看出两次提交之后，文件发生的变化。
+
+2.具体查看两次commit提交之后某文件的差异：
+git diff hash1 hash2 -- 文件名
+
+3.比较两个分支的所有有差异的文件的详细差异：
+git diff branch1 branch2
+
+4.比较两个分支的指定文件的详细差异
+git diff branch1 branch2 文件名(带路径)
+
+5.比较两个分支的所有有差异的文件列表
+git diff branch1 branch2 --stat
+
+git clean -f 删掉未追踪的
+git clean -fd 删掉未追踪的 和 目录
+git clean -nf 删之前查看会删啥
+
+
+
+
+windows资源管理器地址中输入 \\10.0.203.20 
+
+用户名/密码 ： soft/soft123456
+
+软件目录下有 svn软件：TortoiseSVN-1.10.1.28295-x64-svn-1.10.2.msi
+
+
+
+策划SVN目录(所有人都有权限读取)：
+
+svn://10.0.203.20/moba.svn/strategy
+
+
+美术SVN目录：
+
+svn://10.0.203.20/moba.svn/art
+
+
+技术SVN目录（只有技术有权限）
+
+svn://10.0.203.20/moba.svn/tech
+
+
+
+sunheyuan = io23fdk34ke    svn账户和密码
